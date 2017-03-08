@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    <groupId>cl.duoc.ded</groupId>
+    <artifactId>biblioteca-estructura-datos</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    
+    <name><![CDATA[Biblioteca de Estructura de Datos - POM]]></name>
+    <description>
+        <![CDATA[Biblioteca con las estructuras de datos a estudiar]]>
+    </description>
+
+    <modules>
+        <module>biblioteca-estructura-datos-api</module>
+        <module>biblioteca-estructura-datos-impl</module>
+    </modules>
+    
+    <developers>
+        <developer>
+            <id>o.rodriguezv</id>
+            <name>Osvaldo Rodríguez</name>
+            <email>o.rodriguez@profesor.duoc.cl</email>
+            <roles>
+                <role>docente</role>
+                <role>desarrollador</role>
+            </roles>
+        </developer>
+    </developers>
+    
+    <organization>
+        <name>DUOC UC</name>
+        <url>http://www.duoc.cl</url>
+    </organization>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <junit.version>4.12</junit.version>
+        <mockito.version>1.9.5</mockito.version>
+        <maven.javadoc.version>2.10.4</maven.javadoc.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cl.duoc.ded</groupId>
+                <artifactId>biblioteca-estructura-datos-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cl.duoc.ded</groupId>
+                <artifactId>biblioteca-estructura-datos-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.javadoc.version}</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>

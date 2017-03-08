@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>cl.duoc.ded</groupId>
+        <artifactId>biblioteca-estructura-datos</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../</relativePath>
+    </parent>
+
+    <artifactId>biblioteca-estructura-datos-api</artifactId>
+    <packaging>jar</packaging>
+    
+    <name><![CDATA[Biblioteca de Estructura de Datos - API]]></name>
+    <description>
+        <![CDATA[Biblioteca con las interfaces de las estructuras de datos a estudiar en la asignatura DED4501]]>
+    </description>
+    
+    <developers>
+        <developer>
+            <id>o.rodriguezv</id>
+            <name>Osvaldo Rodríguez</name>
+            <email>o.rodriguez@profesor.duoc.cl</email>
+            <roles>
+                <role>docente</role>
+                <role>desarrollador</role>
+            </roles>
+        </developer>
+    </developers>
+    
+    <organization>
+        <name>DUOC UC</name>
+        <url>http://www.duoc.cl</url>
+    </organization>
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
