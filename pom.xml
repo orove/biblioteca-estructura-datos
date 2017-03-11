@@ -23,7 +23,7 @@
         <developer>
             <id>o.rodriguezv</id>
             <name>Osvaldo Rodríguez</name>
-            <email>o.rodriguez@profesor.duoc.cl</email>
+            <email>o.rodriguezv@profesor.duoc.cl</email>
             <roles>
                 <role>docente</role>
                 <role>desarrollador</role>
@@ -43,28 +43,26 @@
         <junit.version>4.12</junit.version>
         <mockito.version>1.9.5</mockito.version>
         <maven.javadoc.version>2.10.4</maven.javadoc.version>
+        <maven.sonar.version>3.2</maven.sonar.version>
     </properties>
 
     <dependencyManagement>
-        <dependencies>
+        <dependencies>       
             <dependency>
                 <groupId>cl.duoc.ded</groupId>
                 <artifactId>biblioteca-estructura-datos-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>cl.duoc.ded</groupId>
                 <artifactId>biblioteca-estructura-datos-impl</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
@@ -74,12 +72,19 @@
     </dependencyManagement>
     
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven.javadoc.version}</version>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven.javadoc.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>${maven.sonar.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>

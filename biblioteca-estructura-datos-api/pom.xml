@@ -23,7 +23,7 @@
         <developer>
             <id>o.rodriguezv</id>
             <name>Osvaldo Rodríguez</name>
-            <email>o.rodriguez@profesor.duoc.cl</email>
+            <email>o.rodriguezv@profesor.duoc.cl</email>
             <roles>
                 <role>docente</role>
                 <role>desarrollador</role>
@@ -57,6 +57,11 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <version>${maven.sonar.version}</version>
             </plugin>
         </plugins>
     </build>
