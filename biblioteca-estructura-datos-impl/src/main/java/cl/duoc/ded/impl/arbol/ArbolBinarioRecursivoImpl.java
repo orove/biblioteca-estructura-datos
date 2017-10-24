@@ -19,8 +19,10 @@ import cl.duoc.ded.exception.ElementoNuloException;
 import java.util.Comparator;
 import cl.duoc.ded.api.util.Visitador;
 import cl.duoc.ded.api.Cola;
+import cl.duoc.ded.impl.arbol.visitador.VisitadorEnLista;
 import cl.duoc.ded.impl.cola.ColaImpl;
 import cl.duoc.ded.impl.lista.ListaEnlazadaSimpleImpl;
+import java.util.Objects;
 
 
 
@@ -46,7 +48,7 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
     protected Visitador operacionAlVisitarElemento;
     
     /**
-     * comparador de comparación de los elementos utilizado al momento
+     * comparador de elementos utilizado al momento
      * de agregar un elemento al árbol binario.
      */
     protected final Comparator criterioComparacion;
@@ -57,7 +59,7 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
     private Integer numeroElementos = 0;
     
     /**
-     * Constructor por defecto que utiliza como comparador de comparación
+     * Constructor por defecto que utiliza para la comparación
      * la interfaz comparable que debe tener implementada el elemento T
      * que manejará el árbol binario.
      */
@@ -372,7 +374,7 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
         // y además este podado
         // el metodo retornará un true, caso contrario retorna false.
         //
-        return this.isEquilibrado(0) && this.isPodado();           
+        return this.isPodado() && this.isEquilibrado(0);
     }
 
     /**
@@ -421,20 +423,20 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
 
     @Override
     public int getPeso() {
-       return this.numeroElementos;    
-        
-   }
+        return this.numeroElementos;            
+    }
     
     private int calcularPesoSubArbol(NodoArbolBinario<T> t){
-        
-     if (t == null) {
-         return 0;
-     }
-     
-    int c1 = calcularPesoSubArbol(t.getRamaIzquierda());
-    int c2 = calcularPesoSubArbol(t.getRamaDerecha());
-    int c3 = c1+c2+1;
-    return c3;
+
+        if (t == null) {
+            return 0;
+        }
+
+        int c1 = calcularPesoSubArbol(t.getRamaIzquierda());
+        int c2 = calcularPesoSubArbol(t.getRamaDerecha());
+        int c3 = c1+c2+1;
+
+        return c3;
     
     }
     
@@ -444,7 +446,9 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
         NodoArbolBinario<T> nodo = raiz;
         int altura = 0;
         
-        if(this.calcularPesoSubArbol(nodo.getRamaDerecha()) == 0 && this.calcularPesoSubArbol(nodo.getRamaIzquierda()) == 0) return 0;
+        if(this.calcularPesoSubArbol(nodo.getRamaDerecha()) == 0 && this.calcularPesoSubArbol(nodo.getRamaIzquierda()) == 0) {
+            return 0;
+        }
         
         for(int i = 0; i < this.calcularPesoSubArbol(raiz); i++){
             if(this.calcularPesoSubArbol(nodo.getRamaDerecha()) > this.calcularPesoSubArbol(nodo.getRamaIzquierda())){
@@ -487,5 +491,41 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
             return this.getCamino(camino, nodo.getRamaDerecha(), elemento);
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean sonIguales = false;
+        
+        // Verificar que obj es de tipo Arbol
+        if(obj != null && obj instanceof Arbol) {
+            Arbol arbol = (Arbol) obj;
+            
+            // mismo peso
+            if(this.getPeso() == arbol.getPeso()) {
+                
+                // mismo recorrido en pre-orden
+                VisitadorEnLista<T> visitador = new VisitadorEnLista<>();
+                this.recorrerEnPreOrden(visitador);
+                Lista<T> listaPreOrdenArbol1 = visitador.getLista();
+                
+                visitador = new VisitadorEnLista<>();
+                arbol.recorrerEnPreOrden(visitador);
+                Lista<T> listaPreOrdenArbol2 = visitador.getLista();
+                                
+                return listaPreOrdenArbol1.equals(listaPreOrdenArbol2);
+            }
+        }
+        
+        
+        return sonIguales;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.numeroElementos);
+        return hash;
+    }
+     
      
 }

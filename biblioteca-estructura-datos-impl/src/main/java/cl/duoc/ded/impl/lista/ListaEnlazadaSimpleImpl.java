@@ -18,6 +18,7 @@ import cl.duoc.ded.exception.VisorException;
 import cl.duoc.ded.impl.lista.nodos.NodoEnlaceSimple;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * Implementaci&oacute;n de {@link cl.duoc.ded.api.Lista} utilizando  
@@ -290,6 +291,43 @@ public class ListaEnlazadaSimpleImpl<T> implements Lista<T> {
             throw new UnsupportedOperationException("remove");
         }
     
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        
+        if(obj!=null && obj instanceof Lista) {
+            Lista lista = (Lista)obj;
+            
+            return this.verificarListasIguales(this,lista);
+        }
+        
+        return false;
+    }
+    
+    private boolean verificarListasIguales(Lista a, Lista b) {
+        
+        if(a.getTotalElementos() == b.getTotalElementos()) {                
+           
+            for(int i=0; i<a.getTotalElementos(); i++) {
+
+                if(!b.getElemento(i).equals(a.getElemento(i))){
+                    return false;
+                }
+            }
+                
+            return true;                
+            
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.cantidadElementos);
+        return hash;
     }
  
 }
