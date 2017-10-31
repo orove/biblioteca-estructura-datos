@@ -6,7 +6,7 @@
     
     <groupId>cl.duoc.ded</groupId>
     <artifactId>biblioteca-estructura-datos</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
     
     <name><![CDATA[Biblioteca de Estructura de Datos - POM]]></name>

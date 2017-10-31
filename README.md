@@ -30,11 +30,5 @@ Estructuras de datos contempladas hasta el momento:
   * **Árbol**
     * Binario de búsqueda recursivo
     
-###Pendientes para el RC 1.0:
-
-  * mejorar la calidad de los test unitarios agregando el uso de mocks
-  * Implementar visualizadores y método para rebalancear un árbol binario
-  * Implementar árbol binario con recorridos iterativos
-  * Implementar árbol n-ario
 
 
