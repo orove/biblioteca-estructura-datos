@@ -527,5 +527,13 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
         return hash;
     }
      
+    /**
+     * Método encargado de reordenar la estructura del árbol de tal forma
+     * que al finalizar su ejecución se llamase al método isEquilibrado con 
+     * tolerancia 1, este debe retornar verdadeo.
+     */
+    private void rebalancearArbolBinario() {
+        // TODO: implementación del rebalanceo        
+    }
      
 }
