@@ -57,6 +57,12 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
      * N&uacute;mero de elementos ingresados en el &aacute;rbol.
      */
     private Integer numeroElementos = 0;
+    /**
+     * N&uacute;mero representativo de la tolerancia antes de rebalancear
+     * Incorporado por Grupo Los Mismos.
+     */
+    
+    private int tolerancia;
     
     /**
      * Constructor por defecto que utiliza para la comparación
@@ -196,12 +202,22 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
         if(this.criterioComparacion.compare(nuevo.getElemento(), nodoActual.getElemento()) > 0) {
             if(nodoActual.getRamaDerecha() == null) {
                 nodoActual.setRamaDerecha(nuevo);
+                //Modificacion por Grupo Los mismos con la finalidad de evaluar
+                //la necesidad de rebalancear cuando un nodo hoja se convierte en nodo padre.
+                //Implementacion por la rama Derecha
+                if(!isEquilibrado(tolerancia)) rebalancearArbolBinario();
+                // Fin Implementacion Grpo Los Mismos
             } else {
                 agregar(nuevo, nodoActual.getRamaDerecha());
             }
         } else if(this.criterioComparacion.compare(nuevo.getElemento(), nodoActual.getElemento()) <= 0) {
             if(nodoActual.getRamaIzquierda() == null) {
                 nodoActual.setRamaIzquierda(nuevo);
+                //Modificacion por Grupo Los mismos con la finalidad de evaluar
+                //la necesidad de rebalancear cuando un nodo hoja se convierte en nodo padre.
+                //Implementacion por la rama Izquierda
+                if(!isEquilibrado(tolerancia)) rebalancearArbolBinario();
+                // Fin Implementacion Grpo Los Mismos
             } else {
                 agregar(nuevo, nodoActual.getRamaIzquierda()); 
             }
@@ -527,5 +543,13 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
         return hash;
     }
      
+    /**
+     * Método encargado de reordenar la estructura del árbol de tal forma
+     * que al finalizar su ejecución se llamase al método isEquilibrado con 
+     * tolerancia 1, este debe retornar verdadeo.
+     */
+    private void rebalancearArbolBinario() {
+        // TODO: implementación del rebalanceo        
+    }
      
 }
