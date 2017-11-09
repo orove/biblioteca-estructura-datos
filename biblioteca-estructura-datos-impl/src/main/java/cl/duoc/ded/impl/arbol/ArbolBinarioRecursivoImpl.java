@@ -139,7 +139,7 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
       
     
     @Override
-    public void agregarElemento(T nuevoElemento) {
+    public synchronized void agregarElemento(T nuevoElemento) {
         
         if(nuevoElemento == null) {
             throw new ElementoNuloException("no se puede agregar elementos nulos al árbol binario");
@@ -170,7 +170,7 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
     
     
     @Override
-    public boolean eliminarElemento(T elemento) {
+    public synchronized boolean eliminarElemento(T elemento) {
         
         if(!this.existe(elemento)) {
             return false;            
