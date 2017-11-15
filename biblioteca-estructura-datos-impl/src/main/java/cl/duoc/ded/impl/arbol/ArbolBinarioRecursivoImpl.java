@@ -59,6 +59,18 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
     private Integer numeroElementos = 0;
     
     /**
+     * Número de comparación que permite saber cuando el arbol será rebalanceado.
+     * Por defecto comienza en 50.
+     */
+    private Integer cantidadElementosRebalanceo = 50;
+    
+    /**
+     * Contador de elementos ingresados y/o eliminados, que determina si el
+     * el arbol será rebalanceado.
+     */
+    private Integer contadorElementosRebalanceo = 0;
+    
+    /**
      * Constructor por defecto que utiliza para la comparación
      * la interfaz comparable que debe tener implementada el elemento T
      * que manejará el árbol binario.
@@ -155,6 +167,8 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
         }
         
         this.numeroElementos++;
+        
+        this.verificarRebalanceoPorCantidadElementosIngresados();
     }
     
     
@@ -536,10 +550,15 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
         // TODO: implementación del rebalanceo        
     }
     
-    private void rebalanceoArbolBinarioCantElementos(){
-        //Todo
-        
-        
+    /**
+     * Método encargado de validar cuando el arbol será rebalanceado
+     * según la cantidad de elementos ingresados y/o eliminados.
+     */
+    private void verificarRebalanceoPorCantidadElementosIngresados(){
+        contadorElementosRebalanceo++;
+        if(this.cantidadElementosRebalanceo >= this.contadorElementosRebalanceo){
+            this.rebalancearArbolBinario();
+            this.contadorElementosRebalanceo = 0;
+        }
     }
-     
 }
