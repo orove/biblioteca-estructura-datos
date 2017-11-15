@@ -535,5 +535,11 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
     private void rebalancearArbolBinario() {
         // TODO: implementación del rebalanceo        
     }
+    
+    private void rebalanceoArbolBinarioCantElementos(){
+        //Todo
+        
+        
+    }
      
 }
