@@ -294,10 +294,7 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
     private boolean eliminar(T elemento, NodoArbolBinario<T> nodoActual, NodoArbolBinario<T> nodoPadre) {
         
         
-        if(this.eliminar(elemento, raiz, raiz)==true)
-        {
-            this.rebalancearArbolBinario();
-        }
+       
         // si el elemento es menor que el elemento del nodo actual, entonces
         // bajar recursivamente por la rama izquierda para eliminar
         if(this.criterioComparacion.compare(elemento, nodoActual.getElemento()) < 0) {
@@ -330,10 +327,25 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
                 nodoPadre.setRamaDerecha((nodoActual.getRamaIzquierda() != null)? nodoActual.getRamaIzquierda():nodoActual.getRamaDerecha());
             }
             
+            
             return true;
+            
+            
         }
         
+               
         
+    }
+    
+    private void  rebalanceoAlEliminar(T elemento, NodoArbolBinario<T> nodoActual, NodoArbolBinario<T> nodoPadre)
+    {
+        
+        
+        
+        if(this.eliminar(elemento, nodoActual, nodoPadre)==true)
+        {
+            this.rebalancearArbolBinario();
+        }
     }
     
     private T getElementoConMinimoValor(NodoArbolBinario<T> nodo) {
