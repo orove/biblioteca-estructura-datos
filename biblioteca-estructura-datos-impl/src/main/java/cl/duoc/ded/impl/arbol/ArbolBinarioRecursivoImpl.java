@@ -57,6 +57,18 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
      * N&uacute;mero de elementos ingresados en el &aacute;rbol.
      */
     private Integer numeroElementos = 0;
+    /**
+     * Valor absoluto por defecto para rebalancear el Arbol Binario
+     */
+    private Integer tolerancia = null;
+
+    public Integer getTolerancia() {
+        return tolerancia;
+    }
+
+    public void setTolerancia(Integer tolerancia) {
+        this.tolerancia = tolerancia;
+    }
     
     /**
      * Número de comparación que permite saber cuando el arbol será rebalanceado.
@@ -100,7 +112,7 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
         
         this.criterioComparacion = criterio;
     }
-    
+
         
     @Override
     public void recorrerEnPreOrden(Visitador<T> operacion) {
@@ -210,12 +222,29 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
         if(this.criterioComparacion.compare(nuevo.getElemento(), nodoActual.getElemento()) > 0) {
             if(nodoActual.getRamaDerecha() == null) {
                 nodoActual.setRamaDerecha(nuevo);
+                //Criterio para rebalancear cuando un nodo hoja se convierte en nodo padre.
+                //Implementacion por la rama Derecha
+                if (tolerancia != null && nodoActual.getRamaIzquierda() == null) {
+                    this.setTolerancia(tolerancia);
+                    if(!this.isEquilibrado(this.tolerancia)) {
+                        this.rebalancearArbolBinario();
+                    }
+                }
+                
             } else {
                 agregar(nuevo, nodoActual.getRamaDerecha());
             }
         } else if(this.criterioComparacion.compare(nuevo.getElemento(), nodoActual.getElemento()) <= 0) {
             if(nodoActual.getRamaIzquierda() == null) {
                 nodoActual.setRamaIzquierda(nuevo);
+                //Criterio para rebalancear cuando un nodo hoja se convierte en nodo padre.
+                //Implementacion por la rama Izquierda
+                if (tolerancia != null && nodoActual.getRamaDerecha() == null) {
+                    this.setTolerancia(tolerancia);
+                    if(!this.isEquilibrado(this.tolerancia)) {
+                        this.rebalancearArbolBinario();
+                    }
+                }
             } else {
                 agregar(nuevo, nodoActual.getRamaIzquierda()); 
             }
@@ -425,14 +454,14 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
             return alturaRamaDerecha;
         }        
     }
-    
+ 
     @Override
     public boolean isEquilibrado(int tolerancia) {
         int ramaIzquierda;
         int ramaDerecha;
                
-        if(tolerancia < 0){
-            throw new ArgumentoInvalidoException("El valor de tolerancia debe ser un número positivo");
+        if(tolerancia<0){
+            tolerancia = -tolerancia;                    
         }
         
         ramaIzquierda = this.getAlturaPorRama(this.raiz.getRamaIzquierda());
