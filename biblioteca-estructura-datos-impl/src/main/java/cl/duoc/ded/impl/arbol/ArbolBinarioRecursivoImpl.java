@@ -58,11 +58,9 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
      */
     private Integer numeroElementos = 0;
     /**
-     * N&uacute;mero representativo de la tolerancia antes de rebalancear
-     * Incorporado por Grupo Los Mismos.
+     * Valor absoluto por defecto para rebalancear el Arbol Binario
      */
-    
-    private int tolerancia;
+    private Integer tolerancia = null;
     
     /**
      * Constructor por defecto que utiliza para la comparación
@@ -94,7 +92,44 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
         
         this.criterioComparacion = criterio;
     }
+
+    /**
+     * Costructor que setea una tolerancia al generar el Arbol Binario
+     * @param tolerancia Corresponde al nivel de tolerancia permitido
+     * antes de rebalancear el Arbol. Este es un objeto el que se inicia en
+     * null
+     */
+    public ArbolBinarioRecursivoImpl(int tolerancia) {        
+        
+        this.tolerancia = tolerancia;
+        
+        this.criterioComparacion = new Comparator<T>() {
+            @Override
+            public int compare(T elemento1, T elemento2) {
+                return elemento1.compareTo(elemento2);
+            }
+        };
+    }   
     
+    
+    /**
+     * 
+     * @param criterio Establece el criterio de incorporacion de elementos
+     * al arbol
+     * @param tolerancia Corresponde al nivel de tolerancia permitido
+     * antes de rebalancear el Arbol. Este es un objeto el que se inicia en
+     * null 
+     */
+    public ArbolBinarioRecursivoImpl(Comparator criterio, int tolerancia) {        
+        
+        this.tolerancia = tolerancia;
+        
+        if(criterio == null) {
+            throw new ArgumentoInvalidoException("el comparador de comparación no puede ser nulo");
+        }
+        
+        this.criterioComparacion = criterio;
+    }
         
     @Override
     public void recorrerEnPreOrden(Visitador<T> operacion) {
@@ -202,22 +237,27 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
         if(this.criterioComparacion.compare(nuevo.getElemento(), nodoActual.getElemento()) > 0) {
             if(nodoActual.getRamaDerecha() == null) {
                 nodoActual.setRamaDerecha(nuevo);
-                //Modificacion por Grupo Los mismos con la finalidad de evaluar
-                //la necesidad de rebalancear cuando un nodo hoja se convierte en nodo padre.
+                //Criterio para rebalancear cuando un nodo hoja se convierte en nodo padre.
                 //Implementacion por la rama Derecha
-                if(!isEquilibrado(tolerancia)) rebalancearArbolBinario();
-                // Fin Implementacion Grpo Los Mismos
+                if (tolerancia != null) {
+                    if(!this.isEquilibrado(tolerancia)) {
+                        this.rebalancearArbolBinario();
+                    }
+                }
+                
             } else {
                 agregar(nuevo, nodoActual.getRamaDerecha());
             }
         } else if(this.criterioComparacion.compare(nuevo.getElemento(), nodoActual.getElemento()) <= 0) {
             if(nodoActual.getRamaIzquierda() == null) {
                 nodoActual.setRamaIzquierda(nuevo);
-                //Modificacion por Grupo Los mismos con la finalidad de evaluar
-                //la necesidad de rebalancear cuando un nodo hoja se convierte en nodo padre.
+                //Criterio para rebalancear cuando un nodo hoja se convierte en nodo padre.
                 //Implementacion por la rama Izquierda
-                if(!isEquilibrado(tolerancia)) rebalancearArbolBinario();
-                // Fin Implementacion Grpo Los Mismos
+                if (tolerancia != null) {
+                    if(!this.isEquilibrado(tolerancia)) {
+                        this.rebalancearArbolBinario();
+                    }
+                }
             } else {
                 agregar(nuevo, nodoActual.getRamaIzquierda()); 
             }
@@ -423,8 +463,8 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
         int ramaIzquierda;
         int ramaDerecha;
                
-        if(tolerancia < 0){
-            throw new ArgumentoInvalidoException("El valor de tolerancia debe ser un número positivo");
+        if(tolerancia<0){
+            tolerancia = -tolerancia;                    
         }
         
         ramaIzquierda = this.getAlturaPorRama(this.raiz.getRamaIzquierda());
