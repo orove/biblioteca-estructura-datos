@@ -59,6 +59,18 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
     private Integer numeroElementos = 0;
     
     /**
+     * Número de comparación que permite saber cuando el arbol será rebalanceado.
+     * Por defecto comienza en 50.
+     */
+    private Integer cantidadElementosRebalanceo = 50;
+    
+    /**
+     * Contador de elementos ingresados y/o eliminados, que determina si el
+     * el arbol será rebalanceado.
+     */
+    private Integer contadorElementosRebalanceo = 0;
+    
+    /**
      * Constructor por defecto que utiliza para la comparación
      * la interfaz comparable que debe tener implementada el elemento T
      * que manejará el árbol binario.
@@ -139,7 +151,7 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
       
     
     @Override
-    public void agregarElemento(T nuevoElemento) {
+    public synchronized void agregarElemento(T nuevoElemento) {
         
         if(nuevoElemento == null) {
             throw new ElementoNuloException("no se puede agregar elementos nulos al árbol binario");
@@ -155,6 +167,8 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
         }
         
         this.numeroElementos++;
+        
+        this.verificarRebalanceoPorCantidadElementosIngresados();
     }
     
     
@@ -170,7 +184,7 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
     
     
     @Override
-    public boolean eliminarElemento(T elemento) {
+    public synchronized boolean eliminarElemento(T elemento) {
         
         if(!this.existe(elemento)) {
             return false;            
@@ -527,5 +541,24 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
         return hash;
     }
      
-     
+    /**
+     * Método encargado de reordenar la estructura del árbol de tal forma
+     * que al finalizar su ejecución se llamase al método isEquilibrado con 
+     * tolerancia 1, este debe retornar verdadeo.
+     */
+    private void rebalancearArbolBinario() {
+        // TODO: implementación del rebalanceo        
+    }
+    
+    /**
+     * Método encargado de validar cuando el arbol será rebalanceado
+     * según la cantidad de elementos ingresados y/o eliminados.
+     */
+    private void verificarRebalanceoPorCantidadElementosIngresados(){
+        this.contadorElementosRebalanceo++;
+        if(this.cantidadElementosRebalanceo >= this.contadorElementosRebalanceo){
+            this.rebalancearArbolBinario();
+            this.contadorElementosRebalanceo = 0;
+        }
+    }
 }
