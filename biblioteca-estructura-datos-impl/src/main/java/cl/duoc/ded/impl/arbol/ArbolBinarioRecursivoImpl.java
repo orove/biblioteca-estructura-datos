@@ -555,7 +555,7 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
      * según la cantidad de elementos ingresados y/o eliminados.
      */
     private void verificarRebalanceoPorCantidadElementosIngresados(){
-        contadorElementosRebalanceo++;
+        this.contadorElementosRebalanceo++;
         if(this.cantidadElementosRebalanceo >= this.contadorElementosRebalanceo){
             this.rebalancearArbolBinario();
             this.contadorElementosRebalanceo = 0;
