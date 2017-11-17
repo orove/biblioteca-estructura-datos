@@ -239,7 +239,7 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
                 nodoActual.setRamaDerecha(nuevo);
                 //Criterio para rebalancear cuando un nodo hoja se convierte en nodo padre.
                 //Implementacion por la rama Derecha
-                if (tolerancia != null & nodoActual.getRamaIzquierda() == null) {
+                if (tolerancia != null && nodoActual.getRamaIzquierda() == null) {
                     if(!this.isEquilibrado(tolerancia)) {
                         this.rebalancearArbolBinario();
                     }
@@ -253,7 +253,7 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
                 nodoActual.setRamaIzquierda(nuevo);
                 //Criterio para rebalancear cuando un nodo hoja se convierte en nodo padre.
                 //Implementacion por la rama Izquierda
-                if (tolerancia != null & nodoActual.getRamaDerecha() == null) {
+                if (tolerancia != null && nodoActual.getRamaDerecha() == null) {
                     if(!this.isEquilibrado(tolerancia)) {
                         this.rebalancearArbolBinario();
                     }
