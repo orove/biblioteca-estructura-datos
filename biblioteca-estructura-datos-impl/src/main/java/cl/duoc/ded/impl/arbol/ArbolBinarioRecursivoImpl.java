@@ -61,6 +61,14 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
      * Valor absoluto por defecto para rebalancear el Arbol Binario
      */
     private Integer tolerancia = null;
+
+    public Integer getTolerancia() {
+        return tolerancia;
+    }
+
+    public void setTolerancia(Integer tolerancia) {
+        this.tolerancia = tolerancia;
+    }
     
     /**
      * Constructor por defecto que utiliza para la comparación
@@ -93,43 +101,6 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
         this.criterioComparacion = criterio;
     }
 
-    /**
-     * Costructor que setea una tolerancia al generar el Arbol Binario
-     * @param tolerancia Corresponde al nivel de tolerancia permitido
-     * antes de rebalancear el Arbol. Este es un objeto el que se inicia en
-     * null
-     */
-    public ArbolBinarioRecursivoImpl(int tolerancia) {        
-        
-        this.tolerancia = tolerancia;
-        
-        this.criterioComparacion = new Comparator<T>() {
-            @Override
-            public int compare(T elemento1, T elemento2) {
-                return elemento1.compareTo(elemento2);
-            }
-        };
-    }   
-    
-    
-    /**
-     * 
-     * @param criterio Establece el criterio de incorporacion de elementos
-     * al arbol
-     * @param tolerancia Corresponde al nivel de tolerancia permitido
-     * antes de rebalancear el Arbol. Este es un objeto el que se inicia en
-     * null 
-     */
-    public ArbolBinarioRecursivoImpl(Comparator criterio, int tolerancia) {        
-        
-        this.tolerancia = tolerancia;
-        
-        if(criterio == null) {
-            throw new ArgumentoInvalidoException("el comparador de comparación no puede ser nulo");
-        }
-        
-        this.criterioComparacion = criterio;
-    }
         
     @Override
     public void recorrerEnPreOrden(Visitador<T> operacion) {
@@ -240,7 +211,8 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
                 //Criterio para rebalancear cuando un nodo hoja se convierte en nodo padre.
                 //Implementacion por la rama Derecha
                 if (tolerancia != null && nodoActual.getRamaIzquierda() == null) {
-                    if(!this.isEquilibrado(tolerancia)) {
+                    this.setTolerancia(tolerancia);
+                    if(!this.isEquilibrado(this.tolerancia)) {
                         this.rebalancearArbolBinario();
                     }
                 }
@@ -254,7 +226,8 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
                 //Criterio para rebalancear cuando un nodo hoja se convierte en nodo padre.
                 //Implementacion por la rama Izquierda
                 if (tolerancia != null && nodoActual.getRamaDerecha() == null) {
-                    if(!this.isEquilibrado(tolerancia)) {
+                    this.setTolerancia(tolerancia);
+                    if(!this.isEquilibrado(this.tolerancia)) {
                         this.rebalancearArbolBinario();
                     }
                 }
@@ -457,7 +430,7 @@ public class ArbolBinarioRecursivoImpl<T extends Comparable> implements Arbol<T>
             return alturaRamaDerecha;
         }        
     }
-    
+ 
     @Override
     public boolean isEquilibrado(int tolerancia) {
         int ramaIzquierda;
